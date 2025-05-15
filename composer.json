@@ -2,8 +2,13 @@
     "name": "sumire/kvs",
     "autoload": {
         "psr-4": {
-            "KVS\\": "src/"
+            "KVS\\": "src/",
+            "Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "docker compose run --rm test -p",
+        "coverage": "docker compose run --rm test -p --coverage"
     },
     "require": {
         "symfony/console": "^7.2"
