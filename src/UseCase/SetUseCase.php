@@ -30,7 +30,7 @@ readonly final class SetUseCase
             $dbName = tryOrThrow(fn() => DatabaseName::new($request->database), UseCaseException::class);
 
             if (!$this->dataRepository->exists($dbName)) {
-                throw new UseCaseException('指定されたデータベースは存在しません: %s', $dbName->value);
+                throw new UseCaseException('指定されたデータベースは存在しません: %s', $dbName);
             }
 
             $db = $this->dataRepository->load($dbName);

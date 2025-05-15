@@ -36,7 +36,7 @@ readonly final class SetRequest
 
         $database = $input->getOption('database');
         if (empty($database)) {
-            throw new InvalidOptionException('Not enough options (missing: "option").');
+            throw new InvalidOptionException('Not enough options (missing: "database").');
         }
 
         $type = match ($input->getOption('type')) {

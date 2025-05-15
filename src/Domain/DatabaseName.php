@@ -25,7 +25,7 @@ readonly final class DatabaseName implements Stringable
         }
 
         if (strpos($value, '__') !== false) {
-            throw new InvalidArgumentException(sprintf('データベース名にアンダーバーの連続は許可されていません: %s', $value));
+            throw new InvalidArgumentException(sprintf('データベース名に連続したアンダーバーは許可されていません: %s', $value));
         }
 
         return new self($value);

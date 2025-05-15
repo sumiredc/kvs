@@ -23,6 +23,29 @@ final class Database
         return new self($dbName, $data);
     }
 
+    public function get(Key $key): mixed
+    {
+        $current = &$this->data;
+        $currentKey = $key;
+        $value = null;
+
+        while (true) {
+            if ($currentKey->isTail()) {
+                $value = $current[$currentKey->value];
+                break;
+            }
+
+            if (!is_array($current[$currentKey->value] ?? false)) {
+                break;
+            }
+
+            $current = &$current[$currentKey->value];
+            $currentKey = $currentKey->next;
+        }
+
+        return $value;
+    }
+
     public function set(Key $key, Value $value): void
     {
         $current = &$this->data;
