@@ -21,7 +21,7 @@ readonly final class DataRepository implements DataRepositoryInterface
             throw new RuntimeException(sprintf('データベースの読み込みに失敗しました: %s', $dbPath->full));
         }
 
-        $data = json_decode($contents);
+        $data = json_decode($contents, true);
         if (!is_array($data)) {
             throw new RuntimeException(sprintf('データの読み込みに失敗しました: %s', $dbPath->full));
         }
@@ -50,7 +50,7 @@ readonly final class DataRepository implements DataRepositoryInterface
             throw new LogicException(sprintf('データベースが既に存在しています: %s', $dbPath->full));
         }
 
-        if (!file_put_contents($dbPath->full, $db->toJson())) {
+        if (file_put_contents($dbPath->full, $db->toJson()) === false) {
             throw new RuntimeException(sprintf('データベースの作成に失敗しました: %s', $dbPath->full));
         }
     }
@@ -63,7 +63,7 @@ readonly final class DataRepository implements DataRepositoryInterface
             throw new LogicException(sprintf('データベースが存在しません: %s', $dbPath->full));
         }
 
-        if (file_put_contents($dbPath->full, $db->toJson())) {
+        if (file_put_contents($dbPath->full, $db->toJson()) === false) {
             throw new RuntimeException(sprintf('データベースの更新に失敗しました: %s', $dbPath->full));
         }
     }

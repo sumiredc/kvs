@@ -23,6 +23,27 @@ final class Database
         return new self($dbName, $data);
     }
 
+    public function set(Key $key, Value $value): void
+    {
+        $current = &$this->data;
+        $currentKey = $key;
+
+        while (true) {
+            if ($currentKey->isTail()) {
+                $current[$currentKey->value] = $value->data;
+                break;
+            }
+
+            if (!is_array($current[$currentKey->value] ?? false)) {
+                $current[$currentKey->value] = [];
+            }
+
+            $current = &$current[$currentKey->value];
+            $currentKey = $currentKey->next;
+        }
+    }
+
+
     public function toJson(): string
     {
         $json = json_encode($this->data);

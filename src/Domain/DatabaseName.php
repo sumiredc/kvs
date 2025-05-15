@@ -17,18 +17,17 @@ readonly final class DatabaseName
     public static function new(string $value): self
     {
         if (preg_match('/^[a-z0-9_]+$/', $value) === 0) {
-            new InvalidArgumentException(sprintf('使用できない文字が含まれています: %s', $value));
+            throw new InvalidArgumentException(sprintf('データベース名に使用できない文字が含まれています: %s', $value));
+        }
+
+        if ($value === '_') {
+            throw new InvalidArgumentException('データベース名にアンダーバーのみは許可されていません');
+        }
+
+        if (strpos($value, '__') !== false) {
+            throw new InvalidArgumentException(sprintf('データベース名にアンダーバーの連続は許可されていません: %s', $value));
         }
 
         return new self($value);
-    }
-
-    public static function tryNew(string $value): ?self
-    {
-        try {
-            return self::new($value);
-        } catch (Throwable) {
-            return null;
-        }
     }
 }

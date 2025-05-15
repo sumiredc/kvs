@@ -11,10 +11,10 @@ docker compose run --rm php <command>
 ## 💻️ Features
 
 1. `new <database>`
-2. `set <key> <value>`
-3. `get <key>`
-4. `delete <key>`
-5. `list`
+2. `set <key> <value> (-d <database>) (-t <string|int|float|bool>)`
+3. `get <key> (-d <database>)`
+4. `delete <key> (-d <database>)`
+5. `list (-d <database>)`
 6. `export <database>`
 7. `import <database>`
 
