@@ -15,13 +15,9 @@ docker compose run --rm php <command>
 3. `get <key> (-d <database>)`
 4. `delete <key> (-d <database>)`
 5. `list (-d <database>)`
-6. `export <database>`
-7. `import <database>`
 
 ## 📚️ Libraries & Resources
 
 - https://github.com/symfony/console
 - https://pestphp.com/
 - https://docs.mockery.io/
-
-
