@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use KVS\Command\DeleteCommand;
 use KVS\Command\GetCommand;
 use KVS\Command\ListCommand;
 use KVS\Command\NewCommand;
@@ -18,5 +19,6 @@ $app->add(new NewCommand());
 $app->add(new SetCommand());
 $app->add(new ListCommand());
 $app->add(new GetCommand());
+$app->add(new DeleteCommand());
 
 $app->run();

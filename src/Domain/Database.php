@@ -27,23 +27,19 @@ final class Database
     {
         $current = &$this->data;
         $currentKey = $key;
-        $value = null;
 
         while (true) {
             if ($currentKey->isTail()) {
-                $value = $current[$currentKey->value];
-                break;
+                return $current[$currentKey->value];
             }
 
             if (!is_array($current[$currentKey->value] ?? false)) {
-                break;
+                return null;
             }
 
             $current = &$current[$currentKey->value];
             $currentKey = $currentKey->next;
         }
-
-        return $value;
     }
 
     public function set(Key $key, Value $value): void
@@ -59,6 +55,31 @@ final class Database
 
             if (!is_array($current[$currentKey->value] ?? false)) {
                 $current[$currentKey->value] = [];
+            }
+
+            $current = &$current[$currentKey->value];
+            $currentKey = $currentKey->next;
+        }
+    }
+
+    public function unset(Key $key): bool
+    {
+        $current = &$this->data;
+        $currentKey = $key;
+
+        while (true) {
+            if ($currentKey->isTail()) {
+                if (key_exists($currentKey->value, $current)) {
+                    unset($current[$currentKey->value]);
+                    return true;
+                }
+
+                // empty 
+                return false;
+            }
+
+            if (!is_array($current[$currentKey->value] ?? false)) {
+                return false;
             }
 
             $current = &$current[$currentKey->value];

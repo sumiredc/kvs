@@ -10,35 +10,33 @@ use KVS\Domain\Exception\UseCaseException;
 use KVS\Domain\Key;
 use KVS\Domain\Repository\DataRepositoryInterface;
 use KVS\Domain\Style\OutputStyleInterface;
-use KVS\Domain\Value;
-use KVS\Request\SetRequest;
+use KVS\Request\DeleteRequest;
 use Throwable;
 
-readonly final class SetUseCase
+readonly final class DeleteUseCase
 {
     public function __construct(
         private readonly OutputStyleInterface $style,
         private readonly DataRepositoryInterface $dataRepository
     ) {}
 
-    public function __invoke(SetRequest $request): Result
+    public function __invoke(DeleteRequest $request): Result
     {
-        $value = Value::new($request->value);
-
         try {
-            $key = tryOrThrow(fn() => Key::parse($request->key), UseCaseException::class);
             $dbName = tryOrThrow(fn() => DatabaseName::new($request->database), UseCaseException::class);
+            $key = tryOrThrow(fn() => Key::parse($request->key), UseCaseException::class);
 
             if (!$this->dataRepository->exists($dbName)) {
                 throw new UseCaseException('指定されたデータベースは存在しません: %s', $dbName);
             }
 
             $db = $this->dataRepository->load($dbName);
-            $db->set($key, $value);
+            if (!$db->unset($key)) {
+                throw new UseCaseException('指定されたキーが見つかりませんでした: %s', $request->key);
+            }
 
             $this->dataRepository->update($db);
-
-            $this->style->success(sprintf('保存しました: %s => %s', $request->key, $value));
+            $this->style->success(sprintf('指定されたキーを削除しました: %s', $request->key));
 
             return Result::Success;
         } catch (UseCaseException $ex) {

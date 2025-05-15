@@ -35,7 +35,7 @@ readonly final class GetUseCase
             $value = $db->get($key);
 
             if (is_null($value)) {
-                throw new UseCaseException('指定された値は存在しません: %s', $key);
+                throw new UseCaseException('指定された値は存在しません: %s', $request->key);
             }
 
             $output = is_array($value) ? json_encode($value, JSON_PRETTY_PRINT) : $value;

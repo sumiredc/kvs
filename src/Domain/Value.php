@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace KVS\Domain;
 
-readonly final class Value
+use Stringable;
+
+readonly final class Value implements Stringable
 {
     private function __construct(
         public readonly string|int|float|bool $data
@@ -13,5 +15,10 @@ readonly final class Value
     public static function new(string|int|float|bool $data): self
     {
         return new self($data);
+    }
+
+    public function __toString(): string
+    {
+        return var_export($this->data, true);
     }
 }
