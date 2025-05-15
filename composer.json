@@ -1,0 +1,20 @@
+{
+    "name": "sumire/kvs",
+    "autoload": {
+        "psr-4": {
+            "KVS\\": "src/"
+        }
+    },
+    "require": {
+        "symfony/console": "^7.2"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.8",
+        "mockery/mockery": "^1.6"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
