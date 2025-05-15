@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace KVS\Domain;
 
 use InvalidArgumentException;
-use Throwable;
+use Stringable;
 
-readonly final class DatabaseName
+readonly final class DatabaseName implements Stringable
 {
     private function __construct(
         public readonly string $value
@@ -29,5 +29,10 @@ readonly final class DatabaseName
         }
 
         return new self($value);
+    }
+
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }

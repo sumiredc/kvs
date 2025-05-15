@@ -43,7 +43,6 @@ final class Database
         }
     }
 
-
     public function toJson(): string
     {
         $json = json_encode($this->data);

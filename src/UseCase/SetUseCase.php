@@ -9,15 +9,15 @@ use KVS\Domain\DatabaseName;
 use KVS\Domain\Exception\UseCaseException;
 use KVS\Domain\Key;
 use KVS\Domain\Repository\DataRepositoryInterface;
+use KVS\Domain\Style\OutputStyleInterface;
 use KVS\Domain\Value;
 use KVS\Request\SetRequest;
-use Symfony\Component\Console\Style\StyleInterface;
 use Throwable;
 
 readonly final class SetUseCase
 {
     public function __construct(
-        private readonly StyleInterface $io,
+        private readonly OutputStyleInterface $style,
         private readonly DataRepositoryInterface $dataRepository
     ) {}
 
@@ -40,7 +40,7 @@ readonly final class SetUseCase
 
             return Result::Success;
         } catch (UseCaseException $ex) {
-            $this->io->warning($ex->getMessage());
+            $this->style->warning($ex->getMessage());
 
             return Result::Failure;
         } catch (Throwable $th) {

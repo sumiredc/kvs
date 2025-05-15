@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace KVS\Domain;
 
 use InvalidArgumentException;
+use Stringable;
 
-final class Key
+final class Key implements Stringable
 {
     private function __construct(
         public readonly string $value,
@@ -57,5 +58,10 @@ final class Key
     public function isTail(): bool
     {
         return is_null($this->next);
+    }
+
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }

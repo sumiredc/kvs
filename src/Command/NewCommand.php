@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace KVS\Command;
 
 use KVS\Infra\Repository\DataRepository;
+use KVS\Infra\Style\OutputStyle;
 use KVS\Request\NewRequest;
 use KVS\UseCase\NewUseCase;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'new',
@@ -26,11 +26,11 @@ final class NewCommand extends Command implements CommandInterface
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $style = new OutputStyle($input, $output);
         $dataRepository = new DataRepository;
 
         $request = NewRequest::new($input);
-        $useCase = new NewUseCase($io, $dataRepository);
+        $useCase = new NewUseCase($style, $dataRepository);
         $result = $useCase($request);
 
         return $result->value;
