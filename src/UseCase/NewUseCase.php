@@ -21,8 +21,6 @@ readonly final class NewUseCase
 
     public function __invoke(NewRequest $request): Result
     {
-
-
         try {
             $dbName = tryOrThrow(fn() => DatabaseName::new($request->database), UseCaseException::class);
 
